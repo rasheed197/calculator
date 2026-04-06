@@ -26,7 +26,7 @@ body {
   flex: 1;
   background-color: #191a1f;
   border-radius: 25px;
-  padding: 30px 0;
+  padding: 30px 20px;
   max-width: 400px;
   box-shadow:
     3px 3px 5px 2px black,  /* Right and Bottom */
@@ -49,7 +49,7 @@ body {
     2px 2px 3px 2px black inset, /* Left and Top */
     -1px -1px 3px 0.5px darkgrey inset; /* Right and Bottom */
   margin-bottom: 30px;
-  width: 350px;
+  width: 100%;
 }
 
 .screen > div {
@@ -78,7 +78,7 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
-  width: 350px;
+  width: 100%;
 }
 
 .keypad {
@@ -111,4 +111,26 @@ body {
 
 ::-webkit-scrollbar {
   display: none
+}
+
+
+@media (max-width: 420px) {
+  .container {
+    max-width: 380px;
+    padding: 30px 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    max-width: 350px;
+    padding: 30px 15px;
+  }
+}
+
+@media (max-width: 370px) {
+  .container {
+    max-width: 320px;
+    padding: 30px 10px;
+  }
 }
