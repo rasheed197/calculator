@@ -43,6 +43,9 @@ const handleEvaluate = () => {
     exp = exp.replaceAll("÷", "/"); // replace ÷ with standard javascript division
     exp = exp.replaceAll("x", "*"); // replace x with standard javascript multiplication
     result = eval(exp); // Evaluate the string expression
+    if (result === Infinity || result === -Infinity || isNaN(result)) { // Zero division error
+      result = "Div/0 Error"
+    }
     expArr = [result]; // this way when the user press an operator it uses the currenly evaluated value e.g "500+" instead of "0+"
     myResult.innerHTML = result;
     expression.innerHTML = oldExp;
@@ -61,12 +64,17 @@ const handleBackspace = () => {
   }
 };
 
-const handleDecimal = (key) => {
+const handleDecimal = () => {
+  if (isEvaluated === true) isEvaluated = false; // Set isEvaluated to false
+
+  if (expArr.length === 0) {
+    expArr = ["0"]; // This way we get values like ["0", ".", "5"] instead of [".", "5"]
+  }
+
   exp = expArr.join(""); // i.e ['3', '+', '5', '0', '-', '4', '0'] -> "3+50-40"
   // console.log(exp);
   const pattern = /\d+\.?\d*$/g; // to extract 40 or 40. or 40.12
   const lastNumber = exp.match(pattern)[0]; // extract the last digit(s) 40 in exp and store it in lastNumber
-  // console.log(lastNumber);
   if (lastNumber.includes(".")) {
     // if the last number is already a decimal e.g 2. or 2.3
     // DO NOTHING. We don't want 2.5.4 or 2..6
@@ -84,14 +92,17 @@ const handleNumbers = (key) => {
   // isEvaluated = false;
   if (isEvaluated === true) {
     expArr = []; // we want to start with a new number instead of the currently evaluated number
-    expArr.push(key.innerHTML); // add the number to the end of the list.
-    exp = expArr.join("");
+    expArr.push(key.innerHTML); // add the number to expArr.
+    exp = expArr.join(""); // join array elements to form a string
     myResult.innerHTML = exp;
     isEvaluated = false; // so we don't enter this if condition again as it will set expArr to [] again.
   } else {
-    expArr.push(key.innerHTML); // add the number to the end of the list.
-    exp = expArr.join("");
-    myResult.innerHTML = exp;
+      if (expArr[0] === "0" && expArr.length === 1) { // if expArr = ["0"]
+        expArr.splice(0, 1) // Remove the first zero
+      }
+      expArr.push(key.innerHTML); // add the number to the end of the list.
+      exp = expArr.join(""); // join array elements to form a string
+      myResult.innerHTML = exp;
   }
 };
 
@@ -156,11 +167,10 @@ keys.forEach((key) => {
     } else if (key.innerHTML === "=") {
       handleEvaluate();
     } else if (key.innerHTML === "▪") {
-      handleDecimal(key);
+      handleDecimal();
     } else {
       // If the user press a number and not special character
       handleNumbers(key);
     }
   });
 });
-
