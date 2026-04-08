@@ -74,7 +74,16 @@ const handleDecimal = () => {
   exp = expArr.join(""); // i.e ['3', '+', '5', '0', '-', '4', '0'] -> "3+50-40"
   // console.log(exp);
   const pattern = /\d+\.?\d*$/g; // to extract 40 or 40. or 40.12
-  const lastNumber = exp.match(pattern)[0]; // extract the last digit(s) 40 in exp and store it in lastNumber
+  let lastNumber;
+
+  try { // if exp ends with an operator e.g "3+50-40+", lastNumber regex returns a TypeError
+    lastNumber = exp.match(pattern)[0]; // extract the last digit(s) 40 in exp and store it in lastNumber
+  } catch (err) {
+    if (err instanceof TypeError) {
+      lastNumber = "" // lastNumber is undefined so we set it to "", else we get a TypeError in the condition below.
+    }
+  }
+
   if (lastNumber.includes(".")) {
     // if the last number is already a decimal e.g 2. or 2.3
     // DO NOTHING. We don't want 2.5.4 or 2..6
