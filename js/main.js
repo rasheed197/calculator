@@ -74,7 +74,7 @@ const handleDecimal = () => {
 
   exp = expArr.join(""); // i.e ['3', '+', '5', '0', '-', '4', '0'] -> "3+50-40"
   // console.log(exp);
-  const pattern = /\d+\.?\d*$/g; // to extract 40 or 40. or 40.12
+  const pattern = /\.*\d+\.?\d*$/g; // to extract 40 or 40. or 40.12 or .40
   let lastNumber;
 
   try {
@@ -83,6 +83,7 @@ const handleDecimal = () => {
   } catch (err) {
     if (err instanceof TypeError) {
       lastNumber = exp.at(-1); // lastNumber is undefined so we set it to exp last element, else we get a TypeError in the condition below.
+      console.log(lastNumber);
     }
   }
 
@@ -186,3 +187,5 @@ keys.forEach((key) => {
     }
   });
 });
+
+
