@@ -43,8 +43,9 @@ const handleEvaluate = () => {
     exp = exp.replaceAll("÷", "/"); // replace ÷ with standard javascript division
     exp = exp.replaceAll("x", "*"); // replace x with standard javascript multiplication
     result = eval(exp); // Evaluate the string expression
-    if (result === Infinity || result === -Infinity || isNaN(result)) { // Zero division error
-      result = "Div/0 Error"
+    if (result === Infinity || result === -Infinity || isNaN(result)) {
+      // Zero division error
+      result = "Div/0 Error";
     }
     expArr = [result]; // this way when the user press an operator it uses the currenly evaluated value e.g "500+" instead of "0+"
     myResult.innerHTML = result;
@@ -76,11 +77,12 @@ const handleDecimal = () => {
   const pattern = /\d+\.?\d*$/g; // to extract 40 or 40. or 40.12
   let lastNumber;
 
-  try { // if exp ends with an operator e.g "3+50-40+", lastNumber regex returns a TypeError
+  try {
+    // if exp ends with an operator e.g "3+50-40+", lastNumber regex returns a TypeError
     lastNumber = exp.match(pattern)[0]; // extract the last digit(s) 40 in exp and store it in lastNumber
   } catch (err) {
     if (err instanceof TypeError) {
-      lastNumber = "" // lastNumber is undefined so we set it to "", else we get a TypeError in the condition below.
+      lastNumber = exp.at(-1); // lastNumber is undefined so we set it to exp last element, else we get a TypeError in the condition below.
     }
   }
 
@@ -106,12 +108,13 @@ const handleNumbers = (key) => {
     myResult.innerHTML = exp;
     isEvaluated = false; // so we don't enter this if condition again as it will set expArr to [] again.
   } else {
-      if (expArr[0] === "0" && expArr.length === 1) { // if expArr = ["0"]
-        expArr.splice(0, 1) // Remove the first zero
-      }
-      expArr.push(key.innerHTML); // add the number to the end of the list.
-      exp = expArr.join(""); // join array elements to form a string
-      myResult.innerHTML = exp;
+    if (expArr[0] === "0" && expArr.length === 1) {
+      // if expArr = ["0"]
+      expArr.splice(0, 1); // Remove the first zero
+    }
+    expArr.push(key.innerHTML); // add the number to the end of the list.
+    exp = expArr.join(""); // join array elements to form a string
+    myResult.innerHTML = exp;
   }
 };
 
