@@ -79,7 +79,7 @@ const handleDecimal = () => {
 
   try {
     // if exp ends with an operator e.g "3+50-40+", lastNumber regex returns a TypeError
-    lastNumber = exp.match(pattern)[0]; // extract the last digit(s) 40 in exp and store it in lastNumber
+    lastNumber = exp.match(pattern)[0]; // extract the last digit(s) 40 or 40. or 40.12 or .40 in exp and store it in lastNumber
   } catch (err) {
     if (err instanceof TypeError) {
       lastNumber = exp.at(-1); // lastNumber is undefined so we set it to exp last element, else we get a TypeError in the condition below.
@@ -151,11 +151,11 @@ const handlePercentage = () => {
   } else {
     // if it is a number, e.g ['3', '+', '5', '0', '-', '4', '0']
     exp = expArr.join(""); // i.e ['3', '+', '5', '0', '-', '4', '0'] -> "3+50-40"
-    const pattern = /\d+$/g; // to extract 40
+    const pattern = /\.*\d+\.?\d*$/g; // to extract 40 or 40. or 40.12 or .40
 
-    const lastNumber = exp.match(pattern)[0]; // extract the last digit 40 in exp and store it in lastNumber
+    const lastNumber = exp.match(pattern)[0]; // extract the last digit 40 or 40. or 40.12 or .40 in exp and store it in lastNumber
 
-    // console.log(lastNumber)
+    console.log(lastNumber)
     expArr.splice(-lastNumber.length, lastNumber.length); // remove the last element in the array
     const percentage = +lastNumber / 100; // calculate the percentage of the last number
     // console.log(lastNumber)
