@@ -155,7 +155,7 @@ const handlePercentage = () => {
 
     const lastNumber = exp.match(pattern)[0]; // extract the last digit 40 or 40. or 40.12 or .40 in exp and store it in lastNumber
 
-    console.log(lastNumber)
+    // console.log(lastNumber)
     expArr.splice(-lastNumber.length, lastNumber.length); // remove the last element in the array
     const percentage = +lastNumber / 100; // calculate the percentage of the last number
     // console.log(lastNumber)
