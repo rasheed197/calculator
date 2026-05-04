@@ -151,7 +151,7 @@ const handlePercentage = () => {
   } else {
     // if it is a number, e.g ['3', '+', '5', '0', '-', '4', '0']
     exp = expArr.join(""); // i.e ['3', '+', '5', '0', '-', '4', '0'] -> "3+50-40"
-    const pattern = /\.*\d+\.?\d*$/g; // to extract 40 or 40. or 40.12 or .40
+    const pattern = /\.*\d+\.?\d*(e-\d*)*$/g; // to extract 40 or 40. or 40.12 or .40 or 9e-8
 
     const lastNumber = exp.match(pattern)[0]; // extract the last digit 40 or 40. or 40.12 or .40 in exp and store it in lastNumber
 
